@@ -15,6 +15,7 @@
     <section>
         <div class="container">
             <h1 class="title">Wordle</h1>
+            <pre>Guess the word</pre>
             <div id="otp-form-0" class="otp-form">
                 <input type="text" id="otp-input-00" class="otp-input" maxlength="1" />
                 <input type="text" id="otp-input-01" class="otp-input" maxlength="1" />
