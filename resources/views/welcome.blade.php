@@ -53,6 +53,7 @@
                 <input type="text" id="otp-input-44" class="otp-input-4" maxlength="1" />
             </div>
             <!-- Repeat similar forms for more if needed -->
+            <button id="refreshButton">Get new word</button>
         </div>
     </section>
     <script src="/js/jquery.min.js"></script>
@@ -87,6 +88,9 @@
                     });
                 }
             });
+        });
+        document.getElementById('refreshButton').addEventListener('click', function() {
+            location.reload();
         });
     </script>
 </body>

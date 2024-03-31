@@ -76,3 +76,17 @@ section {
     font-size: 16px;
     border: none;
 }
+#refreshButton {
+    margin-top: 10px;
+    padding: 10px;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid rgb(209, 205, 205);
+    background-color: #121517;
+    color: white;
+    border-radius: 10px;
+    transition: all 0.1s ease-in-out;
+}
+#refreshButton:hover {
+    transform: scale(1.03, 1.03);
+}
