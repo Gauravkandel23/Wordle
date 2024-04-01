@@ -17,11 +17,11 @@
             <h1 class="title">Wordle</h1>
             <pre>Guess the word</pre>
             <div id="otp-form-0" class="otp-form">
-                <input type="text" id="otp-input-00" class="otp-input" maxlength="1" />
-                <input type="text" id="otp-input-01" class="otp-input" maxlength="1" />
-                <input type="text" id="otp-input-02" class="otp-input" maxlength="1" />
-                <input type="text" id="otp-input-03" class="otp-input" maxlength="1" />
-                <input type="text" id="otp-input-04" class="otp-input" maxlength="1" />
+                <input type="text" id="otp-input-00" class="otp-input-0" maxlength="1" />
+                <input type="text" id="otp-input-01" class="otp-input-0" maxlength="1" />
+                <input type="text" id="otp-input-02" class="otp-input-0" maxlength="1" />
+                <input type="text" id="otp-input-03" class="otp-input-0" maxlength="1" />
+                <input type="text" id="otp-input-04" class="otp-input-0" maxlength="1" />
             </div>
 
             <div id="otp-form-0" class="otp-form">
@@ -85,6 +85,7 @@
                 if (index !== 0) {
                     inputs.forEach(input => {
                         input.disabled = true;
+
                     });
                 }
             });

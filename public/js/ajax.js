@@ -78,37 +78,26 @@ const randomWord = possibleWords[Math.floor(Math.random() * possibleWords.length
 // Include the random word in the request data
 
 $(document).ready(function () {
-    $('.otp-input').keypress(function (e) {
-        if (e.which == 13) {
-            e.preventDefault();
-            sendDataToBackend();
-        }
-    });
-
-    function sendDataToBackend() {
-        var inputs = $('.otp-input');
+    // Function to send data to backend and handle response
+    function sendDataAndHandleResponse(inputs, index) {
         var inputData = [];
+        var isEmpty = false;
 
         // Check if any input field is empty
-        var isEmpty = false;
         inputs.each(function () {
             if ($(this).val().trim() === '') {
                 isEmpty = true;
-                $(this).css('outline', '2px solid red'); // Set outline to red for empty input
+                $(this).css('outline', '2px solid red');
             } else {
                 inputData.push($(this).val());
-                $(this).css('outline', ''); // Reset outline for non-empty input
+                $(this).css('outline', '');
             }
         });
 
         if (isEmpty) {
-            // If any input field is empty, do not send the request
             console.log('Please fill all the input fields.');
             return;
         }
-
-        // Select a random word from the list of possible words
-
 
         // Prepare the request payload
         var requestData = {
@@ -126,459 +115,58 @@ $(document).ready(function () {
             },
             contentType: 'application/json',
             success: function (response) {
-                // Handle success response
                 console.log('Data sent successfully:', response);
-                // Update input field colors based on response
-                updateInputFieldColors(response);
+                updateInputFieldColors(response, index);
             },
             error: function (xhr, status, error) {
-                // Handle error response
                 console.error('Error:', error);
             }
         });
     }
 
-    function updateInputFieldColors(response) {
-
-        // Loop through response to update input field colors
-        response.forEach(function (item, index) {
-            var inputField = $('#otp-input-0' + index);
+    // Function to update input field colors based on response
+    function updateInputFieldColors(response, index) {
+        response.forEach(function (item, idx) {
+            var inputField = $(`#otp-input-${index}${idx}`);
             if (item.state === 1) {
-                inputField.css('background-color', '#D2DF19');
-                inputField.prop('disabled', true)
-                // Set background color to green if state is 1
+                inputField.css('background-color', '#D2DF19').prop('disabled', true);
             } else if (item.state === 0) {
-                inputField.css('background-color', 'grey'); // Set background color to grey if state is 0
-                inputField.prop('disabled', true)
+                inputField.css('background-color', 'grey').prop('disabled', true);
             } else {
-                inputField.css('background-color', ''); // Reset background color if state is -1
-                inputField.prop('disabled', true)
+                inputField.css('background-color', '').prop('disabled', true);
             }
+
             setTimeout(function () {
-                const count = item.count;
-                if (count != 5) {
-                    var inputfirst = $('.otp-input-1');
-                    inputfirst.each(function () {
-                        $(this).prop('disabled', false);
-                    });
-                }
-                else {
+                if (item.count !== 5) {
+                    if (index == 4) {
+                        Swal.fire({
+                            title: randomWord,
+                            text: 'Is the correct word',
+                            icon: 'warning'
+                        });
+                    }
+                    $(`.otp-input-${index + 1}`).prop('disabled', false);
+                } else {
                     Swal.fire({
-                        title: 'Congratulation!',
-                        text: 'Correct word Guessed',
+                        title: 'Congratulations!',
+                        text: 'Correct word guessed',
                         icon: 'success'
                     });
-                    var inputfirst = $('.otp-input-1');
-                    inputfirst.each(function () {
-                        $(this).prop('disabled', true);
-                    });
+                    $(`.otp-input-${index + 1}`).prop('disabled', true);
                 }
             }, 300);
         });
-
-    }
-});
-
-
-
-
-$(document).ready(function () {
-    $('.otp-input-1').keypress(function (e) {
-        if (e.which == 13) {
-            e.preventDefault();
-            sendDataToBackend();
-        }
-    });
-
-    function sendDataToBackend() {
-        var inputs = $('.otp-input-1');
-        var inputData = [];
-
-        // Check if any input field is empty
-        var isEmpty = false;
-        inputs.each(function () {
-            if ($(this).val().trim() === '') {
-                isEmpty = true;
-                $(this).css('outline', '2px solid red'); // Set outline to red for empty input
-            } else {
-                inputData.push($(this).val());
-                $(this).css('outline', ''); // Reset outline for non-empty input
-            }
-        });
-
-        if (isEmpty) {
-            // If any input field is empty, do not send the request
-            console.log('Please fill all the input fields.');
-            return;
-        }
-
-        // Select a random word from the list of possible words
-
-        // Prepare the request payload
-        var requestData = {
-            data: inputData,
-            randomword: randomWord
-        };
-
-        // Send the data to the backend
-        $.ajax({
-            type: 'POST',
-            url: '/checkword',
-            data: JSON.stringify(requestData),
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            contentType: 'application/json',
-            success: function (response) {
-                // Handle success response
-                console.log('Data sent successfully:', response);
-                // Update input field colors based on response
-                updateInputFieldColors(response);
-            },
-            error: function (xhr, status, error) {
-                // Handle error response
-                console.error('Error:', error);
-            }
-        });
     }
 
-    function updateInputFieldColors(response) {
-        // Loop through response to update input field colors
-        response.forEach(function (item, index) {
-            var inputField = $('#otp-input-1' + index);
-            if (item.state === 1) {
-                inputField.css('background-color', '#D2DF19');
-                inputField.prop('disabled', true)
-                // Set background color to green if state is 1
-            } else if (item.state === 0) {
-                inputField.css('background-color', 'grey'); // Set background color to grey if state is 0
-                inputField.prop('disabled', true)
-            } else {
-                inputField.css('background-color', ''); // Reset background color if state is -1
-                inputField.prop('disabled', true)
-            }
-            setTimeout(function () {
-                const count = item.count;
-                if (count != 5) {
-                    var inputfirst = $('.otp-input-2');
-                    inputfirst.each(function () {
-                        $(this).prop('disabled', false);
-                    });
-                }
-                else {
-                    Swal.fire({
-                        title: 'Congratulation!',
-                        text: 'Correct word Guessed',
-                        icon: 'success'
-                    });
-                    var inputfirst = $('.otp-input-2');
-                    inputfirst.each(function () {
-                        $(this).prop('disabled', true);
-                    });
-                }
-            }, 300);
+    // Attach keypress event handler to all OTP inputs
 
-        });
-    }
-});
-
-$(document).ready(function () {
-    $('.otp-input-2').keypress(function (e) {
-        if (e.which == 13) {
-            e.preventDefault();
-            sendDataToBackend();
-        }
-    });
-
-    function sendDataToBackend() {
-        var inputs = $('.otp-input-2');
-        var inputData = [];
-
-        // Check if any input field is empty
-        var isEmpty = false;
-        inputs.each(function () {
-            if ($(this).val().trim() === '') {
-                isEmpty = true;
-                $(this).css('outline', '2px solid red'); // Set outline to red for empty input
-            } else {
-                inputData.push($(this).val());
-                $(this).css('outline', ''); // Reset outline for non-empty input
+    // Attach keypress event handler to all OTP inputs with index greater than 0
+    for (let i = 0; i < 5; i++) {
+        $(`.otp-input-${i}`).keypress(function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                sendDataAndHandleResponse($(this).closest('.otp-form').find('input'), i);
             }
         });
-
-        if (isEmpty) {
-            // If any input field is empty, do not send the request
-            console.log('Please fill all the input fields.');
-            return;
-        }
-
-        // Select a random word from the list of possible words
-
-        // Prepare the request payload
-        var requestData = {
-            data: inputData,
-            randomword: randomWord
-        };
-
-        // Send the data to the backend
-        $.ajax({
-            type: 'POST',
-            url: '/checkword',
-            data: JSON.stringify(requestData),
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            contentType: 'application/json',
-            success: function (response) {
-                // Handle success response
-                console.log('Data sent successfully:', response);
-                // Update input field colors based on response
-                updateInputFieldColors(response);
-            },
-            error: function (xhr, status, error) {
-                // Handle error response
-                console.error('Error:', error);
-            }
-        });
-    }
-
-    function updateInputFieldColors(response) {
-        // Loop through response to update input field colors
-        response.forEach(function (item, index) {
-            var inputField = $('#otp-input-2' + index);
-            if (item.state === 1) {
-                inputField.css('background-color', '#D2DF19');
-                inputField.prop('disabled', true)
-                // Set background color to green if state is 1
-            } else if (item.state === 0) {
-                inputField.css('background-color', 'grey'); // Set background color to grey if state is 0
-                inputField.prop('disabled', true)
-            } else {
-                inputField.css('background-color', ''); // Reset background color if state is -1
-                inputField.prop('disabled', true)
-            }
-            setTimeout(function () {
-                const count = item.count;
-                if (count != 5) {
-                    var inputfirst = $('.otp-input-3');
-                    inputfirst.each(function () {
-                        $(this).prop('disabled', false);
-                    });
-                }
-                else {
-                    Swal.fire({
-                        title: 'Congratulation!',
-                        text: 'Correct word Guessed',
-                        icon: 'success'
-                    });
-                    var inputfirst = $('.otp-input-3');
-                    inputfirst.each(function () {
-                        $(this).prop('disabled', true);
-                    });
-                }
-            }, 300);
-        });
-
-    }
-});
-
-$(document).ready(function () {
-    $('.otp-input-3').keypress(function (e) {
-        if (e.which == 13) {
-            e.preventDefault();
-            sendDataToBackend();
-        }
-    });
-
-    function sendDataToBackend() {
-        var inputs = $('.otp-input-3');
-        var inputData = [];
-
-        // Check if any input field is empty
-        var isEmpty = false;
-        inputs.each(function () {
-            if ($(this).val().trim() === '') {
-                isEmpty = true;
-                $(this).css('outline', '2px solid red'); // Set outline to red for empty input
-            } else {
-                inputData.push($(this).val());
-                $(this).css('outline', ''); // Reset outline for non-empty input
-            }
-        });
-
-        if (isEmpty) {
-            // If any input field is empty, do not send the request
-            console.log('Please fill all the input fields.');
-            return;
-        }
-
-        // Select a random word from the list of possible words
-
-        // Prepare the request payload
-        var requestData = {
-            data: inputData,
-            randomword: randomWord
-        };
-
-        // Send the data to the backend
-        $.ajax({
-            type: 'POST',
-            url: '/checkword',
-            data: JSON.stringify(requestData),
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            contentType: 'application/json',
-            success: function (response) {
-                // Handle success response
-                console.log('Data sent successfully:', response);
-                // Update input field colors based on response
-                updateInputFieldColors(response);
-            },
-            error: function (xhr, status, error) {
-                // Handle error response
-                console.error('Error:', error);
-            }
-        });
-
-    }
-    function updateInputFieldColors(response) {
-        // Loop through response to update input field colors
-        response.forEach(function (item, index) {
-            var inputField = $('#otp-input-3' + index);
-            if (item.state === 1) {
-                inputField.css('background-color', '#D2DF19');
-                inputField.prop('disabled', true)
-                // Set background color to green if state is 1
-            } else if (item.state === 0) {
-                inputField.css('background-color', 'grey'); // Set background color to grey if state is 0
-                inputField.prop('disabled', true)
-            } else {
-                inputField.css('background-color', ''); // Reset background color if state is -1
-                inputField.prop('disabled', true)
-            }
-            setTimeout(function () {
-                const count = item.count;
-                if (count != 5) {
-                    var inputfirst = $('.otp-input-4');
-                    inputfirst.each(function () {
-                        $(this).prop('disabled', false);
-                    });
-                }
-                else {
-                    Swal.fire({
-                        title: 'Congratulation!',
-                        text: 'Correct word Guessed',
-                        icon: 'success'
-                    });
-                    var inputfirst = $('.otp-input-4');
-                    inputfirst.each(function () {
-                        $(this).prop('disabled', true);
-                    });
-                }
-            }, 300);
-        });
-
-    }
-});
-
-
-$(document).ready(function () {
-    $('.otp-input-4').keypress(function (e) {
-        if (e.which == 13) {
-            e.preventDefault();
-            sendDataToBackend();
-        }
-    });
-
-    function sendDataToBackend() {
-        var inputs = $('.otp-input-4');
-        var inputData = [];
-
-        // Check if any input field is empty
-        var isEmpty = false;
-        inputs.each(function () {
-            if ($(this).val().trim() === '') {
-                isEmpty = true;
-                $(this).css('outline', '2px solid red'); // Set outline to red for empty input
-            } else {
-                inputData.push($(this).val());
-                $(this).css('outline', ''); // Reset outline for non-empty input
-            }
-        });
-
-        if (isEmpty) {
-            // If any input field is empty, do not send the request
-            console.log('Please fill all the input fields.');
-            return;
-        }
-
-        // Select a random word from the list of possible words
-
-        // Prepare the request payload
-        var requestData = {
-            data: inputData,
-            randomword: randomWord
-        };
-
-        // Send the data to the backend
-        $.ajax({
-            type: 'POST',
-            url: '/checkword',
-            data: JSON.stringify(requestData),
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            contentType: 'application/json',
-            success: function (response) {
-                // Handle success response
-                console.log('Data sent successfully:', response);
-                // Update input field colors based on response
-                updateInputFieldColors(response);
-            },
-            error: function (xhr, status, error) {
-                // Handle error response
-                console.error('Error:', error);
-            }
-        });
-    }
-
-    function updateInputFieldColors(response) {
-        // Loop through response to update input field colors
-        response.forEach(function (item, index) {
-            var inputField = $('#otp-input-4' + index);
-            if (item.state === 1) {
-                inputField.css('background-color', '#D2DF19');
-                inputField.prop('disabled', true)
-                // Set background color to green if state is 1
-            } else if (item.state === 0) {
-                inputField.css('background-color', 'grey'); // Set background color to grey if state is 0
-                inputField.prop('disabled', true)
-            } else {
-                inputField.css('background-color', ''); // Reset background color if state is -1
-                inputField.prop('disabled', true)
-            }
-            setTimeout(function () {
-                const count = item.count;
-                if (count != 5) {
-                    Swal.fire({
-                        title: randomWord,
-                        text: 'Is the correct word',
-                        icon: 'warning'
-                    });
-                }
-                else {
-                    Swal.fire({
-                        title: 'Congratulation!',
-                        text: 'Correct word Guessed',
-                        icon: 'success'
-                    });
-
-                }
-            }, 300);
-        });
-
-
-
     }
 });
