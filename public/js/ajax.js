@@ -25982,15 +25982,14 @@ $(document).ready(function () {
         }
 
         // Prepare the request payload
-        var requestData = {
-            data: inputData,
-            randomword: randomWord
-        };
+
         inputData.forEach(inputdat => {
             guess = guess + inputdat;
         });
-        lowercase = guess.toLowerCase();
-        if (!guessWord.includes(lowercase)) {
+        var lowerguess = guess.toLowerCase();
+        console.log(guess);
+        console.log(lowerguess);
+        if (!guessWord.includes(lowerguess)) {
             var alertguess = $('.alertdata')
             alertguess.css('display', 'flex');
             setTimeout(function () {
@@ -25998,6 +25997,10 @@ $(document).ready(function () {
             }, 3000);
             return
         }
+        var requestData = {
+            data: inputData,
+            randomword: randomWord
+        };
         // Send the data to the backend
         $.ajax({
             type: 'POST',
