@@ -25964,15 +25964,15 @@ $(document).ready(function () {
     function sendDataAndHandleResponse(inputs, index) {
         var inputData = [];
         var isEmpty = false;
-        var guess = ""
         // Check if any input field is empty
         inputs.each(function () {
-            if ($(this).val().trim() === '') {
+            var inputValue = $(this).val().toString().trim(); // Ensure it's a string
+            if (inputValue === '') {
                 isEmpty = true;
                 $(this).css('outline', '2px solid red');
             } else {
-                var value = $(this).val().toLowerCase();
-                inputData.push(value);
+                var lowercaseValue = inputValue.toLowerCase(); // Convert to lowercase
+                inputData.push(lowercaseValue);
                 $(this).css('outline', '');
             }
         });
@@ -25984,9 +25984,7 @@ $(document).ready(function () {
 
         // Prepare the request payload
 
-        inputData.forEach(inputdat => {
-            guess = guess + inputdat;
-        });
+        var guess = inputData.join('');
         if (!guessWord.includes(guess)) {
             var alertguess = $('.alertdata')
             alertguess.css('display', 'flex');
