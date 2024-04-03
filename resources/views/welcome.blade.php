@@ -13,6 +13,7 @@
 
 <body>
     <section>
+        <div class="alertdata">Word not found.</div>
         <div class="container">
             <h1 class="title">Wordle</h1>
             <pre>Guess the word</pre>
