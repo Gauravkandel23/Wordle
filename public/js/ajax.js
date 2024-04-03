@@ -25959,6 +25959,7 @@ const guessWord = [
 // Include the random word in the request data
 
 $(document).ready(function () {
+
     // Function to send data to backend and handle response
     function sendDataAndHandleResponse(inputs, index) {
         var inputData = [];
@@ -25988,7 +25989,8 @@ $(document).ready(function () {
         inputData.forEach(inputdat => {
             guess = guess + inputdat;
         });
-        if (!guessWord.includes(guess)) {
+        lowercase = guess.toLowerCase();
+        if (!guessWord.includes(lowercase)) {
             var alertguess = $('.alertdata')
             alertguess.css('display', 'flex');
             setTimeout(function () {
@@ -26054,7 +26056,6 @@ $(document).ready(function () {
             }, 1700);
         });
     }
-
     // Attach keypress event handler to all OTP inputs
 
     // Attach keypress event handler to all OTP inputs with index greater than 0
