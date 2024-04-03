@@ -26037,7 +26037,7 @@ $(document).ready(function () {
 
             setTimeout(function () {
                 if (item.count !== 5) {
-                    if (index == 4) {
+                    if (index == 5) {
                         Swal.fire({
                             title: randomWord,
                             text: 'Is the correct word',
@@ -26059,7 +26059,7 @@ $(document).ready(function () {
     // Attach keypress event handler to all OTP inputs
 
     // Attach keypress event handler to all OTP inputs with index greater than 0
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 6; i++) {
         $(`.otp-input-${i}`).keypress(function (e) {
             if (e.which == 13) {
                 e.preventDefault();

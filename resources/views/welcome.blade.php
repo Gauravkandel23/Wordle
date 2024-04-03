@@ -67,6 +67,13 @@
                 <input type="text" id="otp-input-43" class="otp-input-4" maxlength="1" />
                 <input type="text" id="otp-input-44" class="otp-input-4" maxlength="1" />
             </div>
+            <div id="otp-form-0" class="otp-form">
+                <input type="text" id="otp-input-50" class="otp-input-5" maxlength="1" />
+                <input type="text" id="otp-input-51" class="otp-input-5" maxlength="1" />
+                <input type="text" id="otp-input-52" class="otp-input-5" maxlength="1" />
+                <input type="text" id="otp-input-53" class="otp-input-5" maxlength="1" />
+                <input type="text" id="otp-input-54" class="otp-input-5" maxlength="1" />
+            </div>
             <!-- Repeat similar forms for more if needed -->
             <button id="refreshButton">Get new word</button>
         </div>
