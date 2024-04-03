@@ -100,6 +100,7 @@ section {
     justify-content: center;
     align-items: center;
     padding: 15px;
+    z-index: 100;
     background-color: white;
     opacity: 0.8;
     color: rgb(52, 59, 66);
