@@ -25972,7 +25972,6 @@ $(document).ready(function () {
                 $(this).css('outline', '2px solid red');
             } else {
                 var lowercaseValue = inputValue.toLowerCase();
-                console.log(lowercaseValue);
                 // Convert to lowercase
                 inputData.push(lowercaseValue);
                 $(this).css('outline', '');
