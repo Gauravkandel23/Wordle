@@ -25971,7 +25971,8 @@ $(document).ready(function () {
                 isEmpty = true;
                 $(this).css('outline', '2px solid red');
             } else {
-                inputData.push($(this).val());
+                var value = $(this).val().toLowerCase();
+                inputData.push(value);
                 $(this).css('outline', '');
             }
         });
@@ -25986,10 +25987,7 @@ $(document).ready(function () {
         inputData.forEach(inputdat => {
             guess = guess + inputdat;
         });
-        var lowerguess = guess.toLowerCase();
-        console.log(guess);
-        console.log(lowerguess);
-        if (!guessWord.includes(lowerguess)) {
+        if (!guessWord.includes(guess)) {
             var alertguess = $('.alertdata')
             alertguess.css('display', 'flex');
             setTimeout(function () {

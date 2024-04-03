@@ -17,7 +17,6 @@
         <div class="container">
             <h1 class="title">Wordle</h1>
             <pre>Guess the word</pre>
-            &quest;
             <div id="otp-form-0" class="otp-form">
                 <input type="text" id="otp-input-00" class="otp-input-0" maxlength="1" />
                 <input type="text" id="otp-input-01" class="otp-input-0" maxlength="1" />
@@ -55,7 +54,7 @@
                 <input type="text" id="otp-input-44" class="otp-input-4" maxlength="1" />
             </div>
             <!-- Repeat similar forms for more if needed -->
-            <button id="refreshButton" onclick="refreshComponent()">Get new word</button>
+            <button id="refreshButton">Get new word</button>
         </div>
     </section>
     <script src="/js/jquery.min.js"></script>
