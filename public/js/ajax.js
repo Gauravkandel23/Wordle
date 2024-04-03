@@ -25991,7 +25991,7 @@ $(document).ready(function () {
             alertguess.css('display', 'flex');
             setTimeout(function () {
                 alertguess.css('display', 'none');
-            }, 3000);
+            }, 1500);
             return
         }
         var requestData = {
