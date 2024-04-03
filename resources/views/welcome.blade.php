@@ -13,10 +13,24 @@
 
 <body>
     <section>
+        <div class="help" id="help">
+            <h1>Help</h1>
+            <div class="wrong"><span class="bgcolor"></span>
+                <p>The letter is not in the word.</p>
+            </div>
+            <div class="wrong-loc"><span class="bgcolor"></span>
+                <p>The letter is in there but not in that position.</p>
+            </div>
+            <div class="correct"><span class="bgcolor"></span>
+                <p>Letter is in correct Position.</p>
+            </div>
+            <span class="cross" onclick="hidehelp()">&cross;</span>
+        </div>
         <div class="alertdata">Word not found.</div>
         <div class="container">
             <h1 class="title">Wordle</h1>
             <pre>Guess the word</pre>
+            <div class="quest" title="help" onclick="showhelp()">&quest;</div>
             <div id="otp-form-0" class="otp-form">
                 <input type="text" id="otp-input-00" class="otp-input-0" maxlength="1" />
                 <input type="text" id="otp-input-01" class="otp-input-0" maxlength="1" />
@@ -91,6 +105,19 @@
             });
 
         });
+        document.getElementById('refreshButton').addEventListener('click', function() {
+            location.reload();
+        });
+
+        function showhelp() {
+            var data = document.getElementById('help');
+            data.style.display = "flex";
+        }
+
+        function hidehelp() {
+            var data = document.getElementById('help');
+            data.style.display = "none";
+        }
     </script>
 </body>
 
