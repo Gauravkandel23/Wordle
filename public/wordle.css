@@ -119,6 +119,12 @@ section {
 .quest:hover {
     background-color: #121517;
 }
+.op1 {
+    left: 50px;
+}
+.op2 {
+    left: 90px;
+}
 .help {
     border: 1px solid rgb(49, 47, 47);
     display: none;
@@ -171,6 +177,7 @@ section {
     aspect-ratio: 1 / 1;
     display: block;
 }
+
 @media only screen and (max-width: 480px) {
     .container {
         margin-top: -50px;

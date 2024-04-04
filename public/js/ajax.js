@@ -12980,7 +12980,6 @@ const possibleWords = [
     "rural",
     "shave"
 ];
-const randomWord = possibleWords[Math.floor(Math.random() * possibleWords.length)];
 const guessWord = [
     "aahed",
     "aalii",
@@ -25955,11 +25954,16 @@ const guessWord = [
     "rural",
     "shave"
 ];
-
+const lettersixwords = ["banana", "purple", "rocket", "window", "sunset", "yellow", "spring", "planet", "guitar", "coffee", "summer", "pencil", "forest", "camera", "orange", "pickle", "saddle", "police", "silver", "circle", "basket", "monkey", "family", "muffin", "frozen", "garden", "shadow", "bottle", "banana", "purple", "rocket", "window", "sunset", "yellow", "spring", "planet", "guitar", "coffee", "summer", "pencil", "forest", "camera", "orange", "pickle", "saddle", "police", "silver", "circle", "basket", "monkey", "family", "muffin", "frozen", "garden", "shadow", "bottle", "banana", "purple", "rocket", "window", "sunset", "yellow", "spring", "planet", "guitar", "coffee", "summer", "pencil", "forest", "camera", "orange", "pickle", "saddle", "police", "silver", "circle", "basket", "monkey", "family", "muffin", "frozen", "garden", "shadow", "bottle", "banana", "purple", "rocket", "window", "sunset", "yellow", "spring", "planet", "guitar", "coffee", "summer", "pencil", "forest", "camera", "orange", "pickle", "saddle", "police", "silver", "circle", "basket", "monkey", "family", "muffin", "frozen", "garden", "shadow", "bottle", "banana", "purple", "rocket", "window", "sunset", "yellow", "spring", "planet", "guitar", "coffee", "summer", "pencil", "forest", "camera", "orange", "pickle", "saddle", "police", "silver", "circle", "basket", "monkey", "family", "muffin", "frozen", "garden", "shadow", "bottle", "banana", "purple", "rocket", "window", "sunset", "yellow", "spring", "planet", "guitar", "coffee", "summer", "pencil", "forest", "camera", "orange", "pickle", "saddle", "police", "silver", "circle", "basket", "monkey", "family", "muffin", "frozen", "garden", "shadow", "bottle"];
 // Include the random word in the request data
-
+let randomWord = null;
+if (k == 6) {
+    randomWord = lettersixwords[Math.floor(Math.random() * lettersixwords.length)];
+}
+else {
+    randomWord = possibleWords[Math.floor(Math.random() * possibleWords.length)];
+}
 $(document).ready(function () {
-
     // Function to send data to backend and handle response
     function sendDataAndHandleResponse(inputs, index) {
         var inputData = [];
@@ -25982,18 +25986,20 @@ $(document).ready(function () {
             console.log('Please fill all the input fields.');
             return;
         }
-
+        const countdata = inputData.length;
         // Prepare the request payload
-
-        var guess = inputData.join('');
-        if (!guessWord.includes(guess)) {
-            var alertguess = $('.alertdata')
-            alertguess.css('display', 'flex');
-            setTimeout(function () {
-                alertguess.css('display', 'none');
-            }, 1500);
-            return
+        if (countdata === 5) {
+            var guess = inputData.join('');
+            if (!guessWord.includes(guess)) {
+                var alertguess = $('.alertdata')
+                alertguess.css('display', 'flex');
+                setTimeout(function () {
+                    alertguess.css('display', 'none');
+                }, 1500);
+                return
+            }
         }
+
         var requestData = {
             data: inputData,
             randomword: randomWord
@@ -26009,7 +26015,7 @@ $(document).ready(function () {
             contentType: 'application/json',
             success: function (response) {
                 console.log('Data sent successfully:', response);
-                updateInputFieldColors(response, index);
+                updateInputFieldColors(response, index, countdata);
             },
             error: function (xhr, status, error) {
                 console.error('Error:', error);
@@ -26018,7 +26024,7 @@ $(document).ready(function () {
     }
 
     // Function to update input field colors based on response
-    function updateInputFieldColors(response, index) {
+    function updateInputFieldColors(response, index, countdata) {
         response.forEach(function (item, idx) {
             var inputField = $(`#otp-input-${index}${idx}`);
             if (item.state === 1) {
@@ -26036,7 +26042,7 @@ $(document).ready(function () {
             }
 
             setTimeout(function () {
-                if (item.count !== 5) {
+                if (item.count !== countdata) {
                     if (index == 5) {
                         Swal.fire({
                             title: randomWord,
@@ -26053,7 +26059,7 @@ $(document).ready(function () {
                     });
                     $(`.otp-input-${index + 1}`).prop('disabled', true);
                 }
-            }, 1700);
+            }, 1900);
         });
     }
     // Attach keypress event handler to all OTP inputs
