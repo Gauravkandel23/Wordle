@@ -5,7 +5,6 @@ $.ajaxSetup({
 });
 
 // If random word is not already stored, generate one and store it
-
 const possibleWords = [
     "cigar",
     "rebut",
@@ -15357,7 +15356,6 @@ $(document).ready(function () {
             },
             contentType: 'application/json',
             success: function (response) {
-                console.log('Data sent successfully:', response);
                 updateInputFieldColors(response, index, countdata);
             },
             error: function (xhr, status, error) {
