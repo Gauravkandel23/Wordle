@@ -10,7 +10,10 @@ body {
     background: #1a2226;
     color: white;
 }
-
+.otp-inputs{
+    caret-color:transparent;
+cursor:pointer;
+}
 section {
     width: 100%;
     min-height: 100vh;
