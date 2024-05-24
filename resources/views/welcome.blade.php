@@ -43,7 +43,7 @@
                 <div id="otp-form-0" class="otp-form">
                     @for ($j = 0; $j < $length; $j++)
                         <input type="text" id="otp-input-{{ $i }}{{ $j }}"
-                            class="otp-input-{{ $i }}" maxlength="1" />
+                            class="otp-input-{{ $i }} otp-inputs" maxlength="1" />
                     @endfor
                 </div>
             @endfor
